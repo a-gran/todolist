@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="js/index.js" defer></script>
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>TodoList</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="todo-list">
+                <h1>Список задач</h1>
+                <div class="create-new-todo">
+                    <input
+                        type="text"
+                        class="message"
+                        placeholder="Описание задачи"
+                        maxlength="100"
+                    />
+                    <button class="add">Добавить дело</button>
+                </div>
+
+                <div class="wrapper">
+                    <ul class="todo"></ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
