@@ -2,7 +2,6 @@
 body {
     background-color: lightgrey; /* Устанавливает светлый фон страницы */
     font-family: sans-serif; /* Устанавливает шрифт sans-serif */
-    -webkit-box-sizing: content-box; /* Для старых браузеров: задает box-sizing */
     box-sizing: content-box; /* Описание модели коробки, без учета границ и паддингов */
 }
 
@@ -26,7 +25,6 @@ body {
     background-color: #1ba39c; /* Устанавливает фоновый цвет */
     padding: 30px; /* Добавляет отступы внутри контейнера */
     border-radius: 10px; /* Скругляет углы */
-    -webkit-box-shadow: 0 2px 10px 0 #074b83; /* Добавляет тень для старых браузеров */
     box-shadow: 0 2px 10px 0 #074b83; /* Добавляет тень */
 }
 
@@ -123,8 +121,6 @@ input[type='checkbox']:checked + label:before {
     border: solid blue; /* Синий цвет линии */
     border-width: 0 3px 3px 0; /* Настройка границ для создания галочки */
     transform: rotate(45deg); /* Поворот на 45 градусов */
-    -webkit-transform: rotate(45deg); /* Для браузеров на основе WebKit */
-    -ms-transform: rotate(45deg); /* Для старых браузеров Microsoft */
     border-radius: 0; /* Без скругления углов */
     margin: 0 15px 5px 5px; /* Отступы */
 }
