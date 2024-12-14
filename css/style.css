@@ -50,10 +50,26 @@ input[type='text'] {
 
 /* Стили для кнопки */
 button {
+    outline: none; /* Убирает внешние отступы */
+    border: none; /* Убирает рамку */
     margin-top: 20px; /* Добавляет отступ сверху */
     width: 400px; /* Устанавливает ширину кнопки */
     padding: 10px; /* Добавляет внутренние отступы */
     cursor: pointer; /* Изменяет курсор на указатель */
+    transition: 0.5s ease; /* Изменяет цвет кнопки при наведении курсора */
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #074b83;
+    color: #fff;
+    transition: 0.5s ease; /* Изменяет цвет кнопки при наведении курсора */
+}
+
+/* Стили для кнопки удаления всех задач */
+.delete {
+    margin-top: 20px; /* Добавляет отступ сверху */
+    width: 400px; /* Устанавливает ширину кнопки */
 }
 
 /* Стили для списка задач */
@@ -101,7 +117,6 @@ label {
 input[type='checkbox'] + label:before {
     content: ''; /* Пустое содержимое */
     background: #1ba39c; /* Устанавливает фоновый цвет */
-    border-radius: 5px; /* Скругляет углы */
     border: 2px solid #ddd; /* Устанавливает цвет и толщину границы */
     display: inline-block; /* Отображает как блочный элемент */
     vertical-align: middle; /* Выравнивает по центру */
@@ -121,6 +136,5 @@ input[type='checkbox']:checked + label:before {
     border: solid blue; /* Синий цвет линии */
     border-width: 0 3px 3px 0; /* Настройка границ для создания галочки */
     transform: rotate(45deg); /* Поворот на 45 градусов */
-    border-radius: 0; /* Без скругления углов */
     margin: 0 15px 5px 5px; /* Отступы */
 }
