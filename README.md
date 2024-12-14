@@ -1,3 +1,3 @@
 # Todolist
 
-## Description: a simple todo list app built with html, css, js.
+### Description: a simple todo list app built with html, css, js.
