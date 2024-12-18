@@ -114,11 +114,11 @@ label {
 }
 
 /* Стили для псевдоэлемента перед меткой (контейнер для чекбокса) */
-input[type='checkbox'] + label:before {
+input[type='checkbox'] + label::before {
     content: ''; /* Пустое содержимое */
     background: #1ba39c; /* Устанавливает фоновый цвет */
     border: 2px solid #ddd; /* Устанавливает цвет и толщину границы */
-    display: inline-block; /* Отображает как блочный элемент */
+    display: inline-block; /* Отображает как блочно-строчный элемент */
     vertical-align: middle; /* Выравнивает по центру */
     width: 10px; /* Ширина элемента */
     height: 10px; /* Высота элемента */
@@ -128,13 +128,12 @@ input[type='checkbox'] + label:before {
 }
 
 /* Стили для чекбокса, когда он отмечен */
-input[type='checkbox']:checked + label:before {
-    content: ''; /* Пустое содержимое */
-    display: inline-block; /* Отображение как блок */
+input[type='checkbox']:checked + label::before {
+    content: ''; /* Пустое содержимое */   
     width: 1px; /* Ширина линии */
     height: 5px; /* Высота линии */
     border: solid blue; /* Синий цвет линии */
     border-width: 0 3px 3px 0; /* Настройка границ для создания галочки */
     transform: rotate(45deg); /* Поворот на 45 градусов */
-    margin: 0 15px 5px 5px; /* Отступы */
+    margin: 0 15px 5px 5px; /* Внешние отступы */
 }

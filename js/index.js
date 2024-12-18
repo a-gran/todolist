@@ -41,7 +41,7 @@ function displayMessages() {
         }'>
                 ${item.todo}</label>
 
-                <img class='delete' src='../icons/delete.png' alt='delete'>
+                <img class='delete' src='./icons/delete.png' alt='delete'>
             </li>
         `
         todo.innerHTML = displayMessage
