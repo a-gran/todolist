@@ -62,8 +62,8 @@ todo.addEventListener('change', (event) => {
 })
 
 todo.addEventListener('contextmenu', (event) => {
-    event.preventDefault()
-
+    event.preventDefault() // Отменяем стандартное контекстное меню
+    // Перебираем задачи и ищем задачу, на которую кликнули
     todoList.forEach((item, i) => {
         if (item.todo === event.target.innerHTML) {
             if (event.ctrlKey || event.metaKey) {
