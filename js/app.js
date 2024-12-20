@@ -8,12 +8,15 @@ let todo = document.querySelector('.todo')
 let del = document.querySelector('.delete')
 // Создаем массив для хранения задач
 let todoList = []
+
 // Проверяем, есть ли сохраненные задачи в localStorage
 if (localStorage.getItem('todo')) {
     // Если есть, преобразуем их из JSON-строки в массив и отображаем
     todoList = JSON.parse(localStorage.getItem('todo'))
     displayMessages()
 }
+
+
 
 // Добавляем обработчик события на кнопку добавления задачи
 addButton.addEventListener('click', () => {
@@ -103,4 +106,8 @@ todo.addEventListener('contextmenu', (event) => {
 })
 
 // Обработчик события клика на кнопку удаления задачи
-del.addEventListener('click', () => this.delElem.parentElement.remove())
+// del.addEventListener('click', () => this.delElem.parentElement.remove())
+
+// const todoListCons = JSON.parse(localStorage.getItem('todo'));
+// console.log(localStorage.getItem('todo'));
+// console.log(todoListCons);
