@@ -4,8 +4,6 @@ let addMessage = document.querySelector('.message')
 let addButton = document.querySelector('.add')
 // Находим контейнер для отображения списка задач
 let todo = document.querySelector('.todo')
-// Находим кнопку для удаления задачи
-let del = document.querySelector('.delete')
 // Создаем массив для хранения задач
 let todoList = []
 
@@ -38,12 +36,31 @@ addButton.addEventListener('click', () => {
     addMessage.value = ''
 })
 
+// Функция добавления обработчиков для кнопок удаления
+function delTask() {
+    // Находим все кнопки удаления
+    const deleteButtons = document.querySelectorAll('.delete')
+    // Добавляем обработчик для каждой кнопки
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            // Получаем индекс задачи из data-атрибута
+            const index = event.target.dataset.index
+            // Удаляем задачу из массива
+            todoList.splice(index, 1)
+            // Сохраняем изменения
+            localStorage.setItem('todo', JSON.stringify(todoList))
+            // Обновляем отображение
+            displayMessages()
+        })
+    })
+}
+
 // Функция для отображения списка задач
 function displayMessages() {
     let displayMessage = '' // Переменная для хранения HTML-кода
 
     // Если список задач пуст, очищаем содержимое контейнера
-    if (todoList.length === 0) todo.innerHTML = ''
+    if (todoList.length === 0) todo.innerHTML = 'Задач нет'
 
     // Перебираем массив задач и формируем HTML-код для каждой задачи
     todoList.forEach((item, i) => {
@@ -62,6 +79,9 @@ function displayMessages() {
         `
         // Добавляем сформированный HTML-код в контейнер
         todo.innerHTML = displayMessage
+
+        // Добавляем обработчики событий для новых элементов
+        delTask()
     })
 }
 
@@ -102,9 +122,6 @@ todo.addEventListener('contextmenu', (event) => {
         }
     })
 })
-
-// Обработчик события клика на кнопку удаления задачи
-// del.addEventListener('click', () => this.delElem.parentElement.remove())
 
 // const todoListCons = JSON.parse(localStorage.getItem('todo'))
 // console.log(localStorage.getItem('todo'))
