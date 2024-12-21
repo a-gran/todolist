@@ -16,8 +16,6 @@ if (localStorage.getItem('todo')) {
     displayMessages()
 }
 
-
-
 // Добавляем обработчик события на кнопку добавления задачи
 addButton.addEventListener('click', () => {
     // Если поле ввода пустое, ничего не делаем
@@ -108,6 +106,6 @@ todo.addEventListener('contextmenu', (event) => {
 // Обработчик события клика на кнопку удаления задачи
 // del.addEventListener('click', () => this.delElem.parentElement.remove())
 
-// const todoListCons = JSON.parse(localStorage.getItem('todo'));
-// console.log(localStorage.getItem('todo'));
-// console.log(todoListCons);
+// const todoListCons = JSON.parse(localStorage.getItem('todo'))
+// console.log(localStorage.getItem('todo'))
+// console.log(todoListCons)
