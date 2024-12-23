@@ -1,127 +1,137 @@
-// Находим элемент для ввода текста новой задачи
+// Находим элемент для ввода новой задачи
 let addMessage = document.querySelector('.message')
-// Находим кнопку для добавления новой задачи
+// Находим кнопку "Добавить"
 let addButton = document.querySelector('.add')
-// Находим контейнер для отображения списка задач
+// Находим список задач
 let todo = document.querySelector('.todo')
-// Создаем массив для хранения задач
+// Создаем массив, где будем хранить все задачи
 let todoList = []
 
-// Проверяем, есть ли сохраненные задачи в localStorage
+// Если в localStorage уже есть сохраненные задачи, подгружаем их
 if (localStorage.getItem('todo')) {
-    // Если есть, преобразуем их из JSON-строки в массив и отображаем
+    // Преобразуем строку в объект (массив задач)
     todoList = JSON.parse(localStorage.getItem('todo'))
+    // Отображаем задачи на экране
     displayMessages()
 }
 
-// Добавляем обработчик события на кнопку добавления задачи
+// При клике на кнопку "Добавить" создаем новую задачу
 addButton.addEventListener('click', () => {
-    // Если поле ввода пустое, ничего не делаем
+    // Если поле ввода пустое, выходим из функции
     if (!addMessage.value) return
 
-    // Создаем объект новой задачи
+    // Формируем объект новой задачи
     let newTodo = {
-        todo: addMessage.value, // Текст задачи
-        checked: false,         // Флаг выполнения задачи
-        import: false,          // Флаг важности задачи
+        // Текст задачи
+        todo: addMessage.value,
+        // Флаг выполнения (изначально false)
+        checked: false,
+        // Флаг важности (исправили import -> important)
+        important: false
     }
 
-    // Добавляем новую задачу в массив
+    // Добавляем новую задачу в общий массив
     todoList.push(newTodo)
-    // Обновляем отображение списка задач
-    displayMessages()
-    // Сохраняем обновленный список задач в localStorage
+    // Сохраняем массив в localStorage (превращаем в строку JSON)
     localStorage.setItem('todo', JSON.stringify(todoList))
+    // Вызываем функцию, которая отрисует задачи заново
+    displayMessages()
     // Очищаем поле ввода
     addMessage.value = ''
 })
 
-// Функция добавления обработчиков для кнопок удаления
+// Функция для удаления задачи
 function delTask() {
-    // Находим все кнопки удаления
+    // Находим все кнопки с классом "delete"
     const deleteButtons = document.querySelectorAll('.delete')
-    // Добавляем обработчик для каждой кнопки
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            // Получаем индекс задачи из data-атрибута
-            const index = event.target.dataset.index
-            // Удаляем задачу из массива
-            todoList.splice(index, 1)
-            // Сохраняем изменения
-            localStorage.setItem('todo', JSON.stringify(todoList))
-            // Обновляем отображение
-            displayMessages()
+    // Пробегаемся по всем кнопкам
+    deleteButtons.forEach(btn => {
+        // Вешаем обработчик клика на каждую кнопку
+        btn.addEventListener('click', (event) => {
+        // Получаем индекс задачи из data-атрибута
+        const index = event.target.dataset.index
+        // Удаляем задачу из массива по индексу
+        todoList.splice(index, 1)
+        // Сохраняем обновленный массив в localStorage
+        localStorage.setItem('todo', JSON.stringify(todoList))
+        // Перерисовываем список задач
+        displayMessages()
         })
     })
 }
 
-// Функция для отображения списка задач
-function displayMessages() {
-    let displayMessage = '' // Переменная для хранения HTML-кода
-
-    // Если список задач пуст, очищаем содержимое контейнера
-    if (todoList.length === 0) todo.innerHTML = 'Задач нет'
-
-    // Перебираем массив задач и формируем HTML-код для каждой задачи
-    todoList.forEach((item, i) => {
-        displayMessage += `
-            <li>
-                <input type='checkbox' id='item_${i}' ${
-            item.checked ? 'checked' : '' // Добавляем флаг checked, если задача выполнена
-        }>
-                <label for='item_${i}' class='${
-            item.important ? 'important' : '' // Добавляем класс important, если задача важная
-        }'>
-                ${item.todo}</label>
-
-                <img class='delete' src='./icons/delete.png' alt='delete'>
-            </li>
-        `
-        // Добавляем сформированный HTML-код в контейнер
-        todo.innerHTML = displayMessage
-
-        // Добавляем обработчики событий для новых элементов
-        delTask()
+// Функция для переключения флага важности задачи
+function addImportant() {
+    // Находим все кнопки с классом "make-important"
+    const importantButtons = document.querySelectorAll('.make-important')
+    // Пробегаемся по этим кнопкам
+    importantButtons.forEach(btn => {
+        // Вешаем обработчик клика
+        btn.addEventListener('click', (event) => {
+        // Получаем индекс задачи
+        const index = event.target.dataset.index
+        // Переключаем флаг important у задачи
+        todoList[index].important = !todoList[index].important
+        // Сохраняем обновленный массив в localStorage
+        localStorage.setItem('todo', JSON.stringify(todoList))
+        // Перерисовываем список, чтобы отобразить изменения
+        displayMessages()
+        })
     })
 }
 
-// Обработчик события изменения состояния чекбокса задачи
-todo.addEventListener('change', (event) => {
-    // Получаем текст задачи, связанный с измененным чекбоксом
-    let valueLabel = todo.querySelector(
-        '[for=' + event.target.getAttribute('id') + ']'
-    ).innerHTML
+// Функция для отображения всех задач
+function displayMessages() {
+    // Если массив задач пуст, показываем сообщение "Задач нет"
+    if (!todoList.length) {
+        todo.innerHTML = 'Задач нет'
+        return
+    }
 
-    // Перебираем задачи и обновляем состояние задачи
-    todoList.forEach((item) => {
-        if (item.todo === valueLabel) {
-            item.checked = !item.checked // Инвертируем флаг выполнения
-            localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем изменения
+    // Строка, в которую соберем HTML со всеми задачами
+    let displayMessage = ''
+    // Перебираем все объекты задач из массива todoList
+    todoList.forEach((item, i) => {
+        // Формируем HTML-разметку для каждой задачи
+        displayMessage += `
+        <li>
+            <input type="checkbox" id="item_${i}" ${item.checked ? 'checked' : ''}>
+            <label for="item_${i}" class="${item.important ? 'important' : ''}">
+            ${item.todo}
+            </label>
+            <!-- Кнопка сделать задачу важной -->
+            <button class="make-important" data-index="${i}">Важная</button>
+            <img class="delete" data-index="${i}" src="./icons/delete.png" alt="delete">
+        </li>
+        `
+    })
+
+    // Записываем весь сформированный HTML в элемент .todo
+    todo.innerHTML = displayMessage
+    // Включаем обработчики удаления для вновь созданных кнопок
+    delTask()
+    // Включаем обработчики переключения важности
+    addImportant()
+}
+
+// Отслеживаем изменения чекбокса (выполнена задача или нет)
+todo.addEventListener('change', event => {
+    // Находим привязанный к чекбоксу label
+    let label = todo.querySelector('[for=' + event.target.id + ']')
+    // Перебираем все задачи в массиве
+    todoList.forEach(item => {
+        // Ищем ту задачу, чей текст совпадает с содержимым label
+        if (item.todo === label.innerHTML) {
+        // Переключаем флаг checked
+        item.checked = !item.checked
+        // Сохраняем изменения в localStorage
+        localStorage.setItem('todo', JSON.stringify(todoList))
         }
     })
 })
 
 // Обработчик события правого клика на задаче
-todo.addEventListener('contextmenu', (event) => {
-    event.preventDefault() // Отменяем стандартное контекстное меню
-    // Перебираем задачи и ищем задачу, на которую кликнули
-    todoList.forEach((item, i) => {
-        if (item.todo === event.target.innerHTML) {
-            if (event.ctrlKey || event.metaKey) {
-                // Если зажата клавиша Ctrl или Command, удаляем задачу
-                todoList.splice(i, 1)
-            } else {
-                // В противном случае переключаем важность задачи
-                item.important = !item.important
-            }
-
-            // Обновляем отображение списка задач
-            displayMessages()
-            // Сохраняем изменения в localStorage
-            localStorage.setItem('todo', JSON.stringify(todoList))
-        }
-    })
-})
+todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
 
 // const todoListCons = JSON.parse(localStorage.getItem('todo'))
 // console.log(localStorage.getItem('todo'))
