@@ -1,43 +1,28 @@
-// Находим элемент для ввода новой задачи
-let addMessage = document.querySelector('.message')
-// Находим кнопку "Добавить"
-let addButton = document.querySelector('.add')
-// Находим список задач
-let todo = document.querySelector('.todo')
-// Создаем массив, где будем хранить все задачи
-let todoList = []
+let addMessage = document.querySelector('.message') // Находим элемент для ввода новой задачи
+let addButton = document.querySelector('.add') // Находим кнопку "Добавить"
+let todo = document.querySelector('.todo') // Находим список задач
+let todoList = [] // Создаем массив, где будем хранить все задачи
 
 // Если в localStorage уже есть сохраненные задачи, подгружаем их
-if (localStorage.getItem('todo')) {
-    // Преобразуем строку в объект (массив задач)
-    todoList = JSON.parse(localStorage.getItem('todo'))
-    // Отображаем задачи на экране
-    displayMessages()
+if (localStorage.getItem('todo')) {    
+    todoList = JSON.parse(localStorage.getItem('todo')) // Преобразуем строку в объект (массив задач)    
+    displayMessages() // Отображаем задачи на экране
 }
 
 // При клике на кнопку "Добавить" создаем новую задачу
-addButton.addEventListener('click', () => {
-    // Если поле ввода пустое, выходим из функции
-    if (!addMessage.value) return
-
+addButton.addEventListener('click', () => {    
+    if (!addMessage.value) return // Если поле ввода пустое, выходим из функции
     // Формируем объект новой задачи
-    let newTodo = {
-        // Текст задачи
-        todo: addMessage.value,
-        // Флаг выполнения (изначально false)
-        checked: false,
-        // Флаг важности (исправили import -> important)
-        important: false
+    let newTodo = {        
+        todo: addMessage.value, // Текст задачи        
+        checked: false, // Флаг выполнения (изначально false)        
+        important: false // Флаг важности (исправили import -> important)
     }
-
-    // Добавляем новую задачу в общий массив
-    todoList.push(newTodo)
-    // Сохраняем массив в localStorage (превращаем в строку JSON)
-    localStorage.setItem('todo', JSON.stringify(todoList))
-    // Вызываем функцию, которая отрисует задачи заново
-    displayMessages()
-    // Очищаем поле ввода
-    addMessage.value = ''
+    
+    todoList.push(newTodo) // Добавляем новую задачу в общий массив    
+    localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем массив в localStorage (превращаем в строку JSON)    
+    displayMessages() // Вызываем функцию, которая отрисует задачи заново    
+    addMessage.value = '' // Очищаем поле ввода
 })
 
 // Функция для удаления задачи
