@@ -2,7 +2,7 @@
 body {
     background-color: lightgrey; /* Устанавливает светлый фон страницы */
     font-family: sans-serif; /* Устанавливает шрифт sans-serif */
-    box-sizing: content-box; /* Описание модели коробки, без учета границ и паддингов */
+    box-sizing: content-box; /* учета границ и паддингов */
 }
 
 /* Стили для контейнера, внутри которого находится контент */
@@ -43,22 +43,39 @@ h1 {
 }
 
 /* Стили для текстового поля */
-input[type='text'] {
-    width: 376px; /* Устанавливает ширину поля ввода */
+input[type="text"] {
+    width: 430px; /* Устанавливает ширину поля ввода */
     padding: 10px; /* Добавляет внутренние отступы */
 }
 
 /* Стили для кнопки */
 button {
+    outline: none; /* Убирает внешнюю обводку */
+    border: none; /* Убирает границу */
     margin-top: 20px; /* Добавляет отступ сверху */
-    width: 400px; /* Устанавливает ширину кнопки */
+    width: 455px; /* Устанавливает ширину кнопки */
     padding: 10px; /* Добавляет внутренние отступы */
     cursor: pointer; /* Изменяет курсор на указатель */
+    transition: 0.5s ease; /* Плавно изменяет цвет кнопки при переводе курсора */
+    font-weight: 600; /* жирный текст */
+}
+
+button:hover { /* Изменяет цвет кнопки при наведение курсора */
+    background-color: #074b83;
+    color: #fff;
+    transition: 0.5s ease;  /* Плавно изменяет цвет кнопки при наведение курсора */
+}
+
+/* Стили для кнопки удаления всех задач */
+.delete {
+    margin-top: 20px; /* Добавляет отступ сверху */
+    width: 400px; /* Устанавливает ширину кнопки */
 }
 
 /* Стили для списка задач */
 .todo {
     padding-left: 0; /* Убирает отступ слева */
+    text-align: center;
 }
 
 /* Стили для каждого элемента списка задачи */
@@ -98,12 +115,11 @@ label {
 }
 
 /* Стили для псевдоэлемента перед меткой (контейнер для чекбокса) */
-input[type='checkbox'] + label:before {
+input[type='checkbox'] + label::before {
     content: ''; /* Пустое содержимое */
     background: #1ba39c; /* Устанавливает фоновый цвет */
-    border-radius: 5px; /* Скругляет углы */
     border: 2px solid #ddd; /* Устанавливает цвет и толщину границы */
-    display: inline-block; /* Отображает как блочный элемент */
+    display: inline-block; /* Отображает как блочно-строчный элемент */
     vertical-align: middle; /* Выравнивает по центру */
     width: 10px; /* Ширина элемента */
     height: 10px; /* Высота элемента */
@@ -113,14 +129,12 @@ input[type='checkbox'] + label:before {
 }
 
 /* Стили для чекбокса, когда он отмечен */
-input[type='checkbox']:checked + label:before {
-    content: ''; /* Пустое содержимое */
-    display: inline-block; /* Отображение как блок */
+input[type='checkbox']:checked + label::before {
+    content: ''; /* Пустое содержимое */   
     width: 1px; /* Ширина линии */
     height: 5px; /* Высота линии */
     border: solid blue; /* Синий цвет линии */
     border-width: 0 3px 3px 0; /* Настройка границ для создания галочки */
     transform: rotate(45deg); /* Поворот на 45 градусов */
-    border-radius: 0; /* Без скругления углов */
-    margin: 0 15px 5px 5px; /* Отступы */
+    margin: 0 15px 5px 5px; /* Внешние отступы */
 }
