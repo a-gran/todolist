@@ -9,11 +9,11 @@ body {
 .container {
     margin: 0 auto; /* Центрирует контейнер по горизонтали */
     padding-top: 50px; /* Добавляет отступ сверху */
+    max-width: 800px; /* Ограничивает максимальную ширину контейнера */
 }
 
 /* Стили для списка задач */
-.todo-list {
-    max-width: 800px; /* Ограничивает максимальную ширину контейнера */
+.todo-list {    
     display: block; /* Устанавливает блочный элемент */
     margin: 0 auto 100px; /* Центрирует контейнер и добавляет отступ снизу */
     background-color: #1ba39c; /* Устанавливает фоновый цвет */
@@ -33,13 +33,21 @@ h1 {
 
 /* Стили для текстового поля */
 input[type="text"] {
-    width: 100%; /* Устанавливает ширину поля ввода */
     padding: 10px; /* Добавляет внутренние отступы */
-
 }
 
 input[type="text"]:focus {
     outline: none;
+}
+
+.create-new-todo {
+    display: flex;
+    flex-direction: column;;
+}
+
+input[type="text"], 
+button.add {
+    flex: 1; /* Одинаковая ширина */
 }
 
 /* Стили для кнопки */
@@ -47,7 +55,6 @@ button {
     outline: none; /* Убирает внешнюю обводку */
     border: none; /* Убирает границу */
     margin-top: 20px; /* Добавляет отступ сверху */
-    width: 100%; /* Устанавливает ширину кнопки */
     padding: 10px; /* Добавляет внутренние отступы */
     cursor: pointer; /* Изменяет курсор на указатель */
     transition: 0.5s ease; /* Плавно изменяет цвет кнопки при переводе курсора */
@@ -135,6 +142,42 @@ input[type='checkbox']:checked + label::before {
 .tools {
     display: flex;
     align-items: center;
+}
+
+/* media-запросы */
+@media (max-width: 375px) {
+    .container {
+        width: 276px;
+    }
+
+    h1 {
+        margin-bottom: 10px; /* Добавляет отступ снизу */
+        font-size: 24px; /* Устанавливает размер шрифта */
+        color: #000000; /* Устанавливает цвет текста */
+    }
+}
+
+@media (min-width: 376px) and (max-width: 575px) {
+    .container {
+        width: 356px;
+    }
+
+    h1 {
+        margin-bottom: 15px; /* Добавляет отступ снизу */
+        font-size: 36px; /* Устанавливает размер шрифта */
+        color: orange; /* Устанавливает цвет текста */
+    }
+}
+
+@media (min-width: 576px) and (max-width: 1080px) {
+    .container {
+        width: 600px;
+    }
+
+    h1 {
+        margin-bottom: 20px; /* Добавляет отступ снизу */
+        font-size: 36px; /* Устанавливает размер шрифта */
+    }
 }
 
 
