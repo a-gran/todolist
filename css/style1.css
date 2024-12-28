@@ -13,7 +13,7 @@ body {
 
 /* Стили для списка задач */
 .todo-list {
-    max-width: 800px; /* Ограничивает максимальную ширину контейнера */
+    max-width: 500px; /* Ограничивает максимальную ширину контейнера */
     display: block; /* Устанавливает блочный элемент */
     margin: 0 auto 100px; /* Центрирует контейнер и добавляет отступ снизу */
     background-color: #1ba39c; /* Устанавливает фоновый цвет */
@@ -31,15 +31,15 @@ h1 {
     font-size: 42px; /* Устанавливает размер шрифта */
 }
 
-/* Стили для текстового поля */
-input[type="text"] {
-    width: 100%; /* Устанавливает ширину поля ввода */
-    padding: 10px; /* Добавляет внутренние отступы */
-
+/* Стили для блока с формой создания новой задачи */
+.create-new-todo {
+    text-align: center; /* Центрирует форму */
 }
 
-input[type="text"]:focus {
-    outline: none;
+/* Стили для текстового поля */
+input[type="text"] {
+    width: 430px; /* Устанавливает ширину поля ввода */
+    padding: 10px; /* Добавляет внутренние отступы */
 }
 
 /* Стили для кнопки */
@@ -47,7 +47,7 @@ button {
     outline: none; /* Убирает внешнюю обводку */
     border: none; /* Убирает границу */
     margin-top: 20px; /* Добавляет отступ сверху */
-    width: 100%; /* Устанавливает ширину кнопки */
+    width: 455px; /* Устанавливает ширину кнопки */
     padding: 10px; /* Добавляет внутренние отступы */
     cursor: pointer; /* Изменяет курсор на указатель */
     transition: 0.5s ease; /* Плавно изменяет цвет кнопки при переводе курсора */
@@ -61,7 +61,7 @@ button:hover { /* Изменяет цвет кнопки при наведени
 }
 
 /* Стили для кнопки удаления */
-.delete, .important-btn, .edit {
+.delete, .important-btn {
     height: 20px; /* Устанавливает высоту кнопки */
     width: 20px; /* Устанавливает ширину кнопки */
 }
@@ -132,22 +132,131 @@ input[type='checkbox']:checked + label::before {
     margin: 0 15px 5px 5px; /* Внешние отступы */
 }
 
-.tools {
+
+
+
+
+
+
+/* Стили для элемента списка */
+.todo li {
+    padding: 1em;
+    list-style-type: none;
+    border-bottom: 1px solid #000;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 40px;
 }
 
+/* Контейнер для основного содержимого задачи */
+.task-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    padding-right: 10px;
+}
 
+/* Контейнер для кнопок действий */
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
 
+/* Стили для отображения текста задачи */
+.task-display {
+    flex: 1;
+    min-width: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-left: 30px; /* Отступ для чекбокса */
+    padding: 3px 0;
+}
 
+/* Стили для поля редактирования */
+.task-textarea {
+    position: absolute;
+    left: 30px; /* Отступ для чекбокса */
+    right: 0;
+    min-height: 24px;
+    padding: 3px 5px;
+    border: 2px solid #1ba39c;
+    border-radius: 4px;
+    width: calc(100% - 30px);
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
 
+/* Стили для чекбокса */
+input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
 
+.checkbox-label {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #1ba39c;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+input[type='checkbox']:checked + .checkbox-label:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #1ba39c;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
 
+/* Стили для кнопок */
+.edit, .make-important {
+    padding: 5px 10px !important;
+    margin: 0 !important;
+    width: auto !important;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
 
+.edit {
+    background-color: #4CAF50;
+    color: white;
+}
 
+.edit:hover {
+    background-color: #45a049;
+}
 
+/* Стили для кнопки удаления */
+.delete {
+    height: 20px;
+    width: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
 
-
-
-
+/* Важные задачи */
+.important {
+    font-weight: bold;
+    color: #a40e11;
+}

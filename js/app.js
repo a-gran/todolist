@@ -46,7 +46,7 @@ function delTask() {
 }
 
 // Функция для переключения флага важности задачи
-function addImportant() {
+function setImportant() {
     // Находим все кнопки с классом 'important'
     const importantButtons = document.querySelectorAll('.important-btn')
     // Пробегаемся по этим кнопкам
@@ -61,6 +61,58 @@ function addImportant() {
         localStorage.setItem('todo', JSON.stringify(todoList))
         // Перерисовываем список, чтобы отобразить изменения
         displayMessages()
+        })
+    })
+}
+
+// Обновленная функция обработки редактирования
+function editTask() {
+    const editButtons = document.querySelectorAll('.edit')
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const index = event.target.dataset.index
+            const taskElement = event.target.closest('li')
+            const textarea = taskElement.querySelector('.task-textarea')
+            const taskDisplay = taskElement.querySelector('.task-display')
+            
+            textarea.style.display = 'block'
+            taskDisplay.style.display = 'none'
+            
+            // Устанавливаем значение и фокус
+            textarea.value = todoList[index].todo
+            textarea.focus()
+            
+            // Устанавливаем высоту textarea в зависимости от содержимого
+            textarea.style.height = 'auto'
+            textarea.style.height = textarea.scrollHeight + 'px'
+        })
+    })
+}
+
+function handleTaskInputs() {
+    const textareas = document.querySelectorAll('.task-textarea')
+    textareas.forEach(textarea => {
+        // Обработчик изменения размера textarea
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto'
+            this.style.height = this.scrollHeight + 'px'
+        })
+
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                const index = textarea.dataset.index
+                const newText = textarea.value.trim()
+                if (newText) {
+                    todoList[index].todo = newText
+                    localStorage.setItem('todo', JSON.stringify(todoList))
+                    displayMessages()
+                }
+            }
+        })
+
+        textarea.addEventListener('blur', () => {
+            displayMessages()
         })
     })
 }
@@ -86,37 +138,21 @@ function displayMessages() {
                 ${item.todo}
             </label>
 
-            <div>
+            <div class="tools">
+                <img class='edit' data-index='${i}' src='./icons/edit.png' alt='edit'>
                 <img class='important-btn' data-index='${i}' src='./icons/important.png' alt='important'>
                 <img class='delete' data-index='${i}' src='./icons/delete.png' alt='delete'>
             </div>
         </li>
         `
     })
-
-    // Записываем весь сформированный HTML в элемент .todo
-    todo.innerHTML = displayMessage
-    // Включаем обработчики удаления для вновь созданных кнопок
-    delTask()
-    // Включаем обработчики переключения важности
-    addImportant()
+    
+    todo.innerHTML = displayMessage // Записываем весь сформированный HTML в элемент .todo    
+    delTask() // Включаем обработчики удаления для вновь созданных кнопок    
+    setImportant() // Включаем обработчики переключения важности
+    editTask() // Добавляем обработчики для кнопок редактирования
+    handleTaskInputs() // Добавляем обработчики для чекбоксов и текстовых полей
 }
-
-// Отслеживаем изменения чекбокса (выполнена задача или нет)
-// todo.addEventListener('change', event => {
-//     // Находим привязанный к чекбоксу label
-//     let label = todo.querySelector('[for=' + event.target.id + ']')
-//     // Перебираем все задачи в массиве
-//     todoList.forEach(item => {
-//         // Ищем ту задачу, чей текст совпадает с содержимым label
-//         if (item.todo === label.innerHTML) {
-//         // Переключаем флаг checked
-//         item.checked = !item.checked
-//         // Сохраняем изменения в localStorage
-//         localStorage.setItem('todo', JSON.stringify(todoList))
-//         }
-//     })
-// })
 
 // Обработчик события правого клика на задаче
 todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
