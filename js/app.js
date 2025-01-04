@@ -73,15 +73,12 @@ function editTask() {
             const index = event.target.dataset.index
             const taskElement = event.target.closest('li')
             const textarea = taskElement.querySelector('.task-textarea')
-            const taskDisplay = taskElement.querySelector('.task-display')
-            
+            const taskDisplay = taskElement.querySelector('.task-display')            
             textarea.style.display = 'block'
-            taskDisplay.style.display = 'none'
-            
+            taskDisplay.style.display = 'none'            
             // Устанавливаем значение и фокус
             textarea.value = todoList[index].todo
-            textarea.focus()
-            
+            textarea.focus()            
             // Устанавливаем высоту textarea в зависимости от содержимого
             textarea.style.height = 'auto'
             textarea.style.height = textarea.scrollHeight + 'px'
