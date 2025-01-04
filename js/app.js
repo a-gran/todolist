@@ -65,53 +65,71 @@ function setImportant() {
     })
 }
 
-// Обновленная функция обработки редактирования
+// Функция для обработки редактирования задачи
 function editTask() {
+    // Находим все кнопки редактирования на странице
     const editButtons = document.querySelectorAll('.edit')
+    
+    // Добавляем обработчик для каждой кнопки редактирования
     editButtons.forEach(btn => {
         btn.addEventListener('click', (event) => {
+            // Получаем индекс текущей задачи из data-атрибута
             const index = event.target.dataset.index
+            
+            // Находим родительский элемент li для текущей задачи
             const taskElement = event.target.closest('li')
-            const textarea = taskElement.querySelector('.task-textarea')
-            const taskDisplay = taskElement.querySelector('.task-display')            
-            textarea.style.display = 'block'
-            taskDisplay.style.display = 'none'            
-            // Устанавливаем значение и фокус
-            textarea.value = todoList[index].todo
-            textarea.focus()            
-            // Устанавливаем высоту textarea в зависимости от содержимого
-            textarea.style.height = 'auto'
-            textarea.style.height = textarea.scrollHeight + 'px'
+            
+            // Находим label элемент, содержащий текст задачи
+            const label = taskElement.querySelector('label')
+            
+            // Создаем input для редактирования
+            const input = document.createElement('input')
+            input.type = 'text'
+            input.value = todoList[index].todo
+            input.className = 'edit-input'
+            input.style.width = '70%'
+            input.style.padding = '5px'
+            input.style.margin = '5px'
+            
+            // Временно скрываем label и показываем input
+            label.style.display = 'none'
+            taskElement.insertBefore(input, label)
+            input.focus()
+            
+            // Обработчик для сохранения изменений при потере фокуса
+            input.addEventListener('blur', () => {
+                saveChanges(input, label, index)
+            })
+            
+            // Обработчик для сохранения изменений при нажатии Enter
+            input.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    saveChanges(input, label, index)
+                }
+            })
         })
     })
 }
 
-function handleTaskInputs() {
-    const textareas = document.querySelectorAll('.task-textarea')
-    textareas.forEach(textarea => {
-        // Обработчик изменения размера textarea
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto'
-            this.style.height = this.scrollHeight + 'px'
-        })
-
-        textarea.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                const index = textarea.dataset.index
-                const newText = textarea.value.trim()
-                if (newText) {
-                    todoList[index].todo = newText
-                    localStorage.setItem('todo', JSON.stringify(todoList))
-                    displayMessages()
-                }
-            }
-        })
-
-        textarea.addEventListener('blur', () => {
-            displayMessages()
-        })
-    })
+// Вспомогательная функция для сохранения изменений
+function saveChanges(input, label, index) {
+    // Получаем новый текст задачи
+    const newText = input.value.trim()
+    
+    // Проверяем, что текст не пустой
+    if (newText) {
+        // Обновляем текст в массиве задач
+        todoList[index].todo = newText
+        // Обновляем текст в label
+        label.textContent = newText
+        // Сохраняем изменения в localStorage
+        localStorage.setItem('todo', JSON.stringify(todoList))
+    }
+    
+    // Показываем label обратно
+    label.style.display = ''
+    // Удаляем поле ввода
+    input.remove()
 }
 
 // Функция для отображения всех задач
@@ -148,7 +166,6 @@ function displayMessages() {
     delTask() // Включаем обработчики удаления для вновь созданных кнопок    
     setImportant() // Включаем обработчики переключения важности
     editTask() // Добавляем обработчики для кнопок редактирования
-    handleTaskInputs() // Добавляем обработчики для чекбоксов и текстовых полей
 }
 
 // Обработчик события правого клика на задаче
