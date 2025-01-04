@@ -9,10 +9,10 @@ if (localStorage.getItem('todo')) {
     displayMessages() // Отображаем задачи на экране
 }
 
-// При клике на кнопку "Добавить" создаем новую задачу
-addButton.addEventListener('click', () => {    
+function setTask() {
     if (!addMessage.value) return // Если поле ввода пустое, выходим из функции
     // Формируем объект новой задачи
+
     let newTodo = {        
         todo: addMessage.value, // Текст задачи        
         checked: false, // Флаг выполнения (изначально false)        
@@ -23,6 +23,16 @@ addButton.addEventListener('click', () => {
     localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем массив в localStorage (превращаем в строку JSON)    
     displayMessages() // Вызываем функцию, которая отрисует задачи заново    
     addMessage.value = '' // Очищаем поле ввода
+}
+
+// При клике на кнопку "Добавить" создаем новую задачу
+addButton.addEventListener('click', () => setTask())
+
+addMessage.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault()
+        setTask()
+    }
 })
 
 // Функция для удаления задачи
@@ -171,6 +181,6 @@ function displayMessages() {
 // Обработчик события правого клика на задаче
 todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
 
-// const todoListCons = JSON.parse(localStorage.getItem('todo'))
-// console.log(localStorage.getItem('todo'))
-// console.log(todoListCons)
+const todoListCons = JSON.parse(localStorage.getItem('todo'))
+console.log("localStorage.getItem('todo')", localStorage.getItem('todo'))
+console.log('todoListCons', todoListCons)
