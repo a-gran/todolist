@@ -97,9 +97,6 @@ function editTask() {
             input.type = 'text'
             input.value = todoList[index].todo
             input.className = 'edit-input'
-            input.style.width = '70%'
-            input.style.padding = '5px'
-            input.style.margin = '5px'
             
             // Временно скрываем label и показываем input
             label.style.display = 'none'

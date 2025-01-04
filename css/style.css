@@ -94,6 +94,24 @@ button:hover { /* Изменяет цвет кнопки при наведени
     align-items: center; /* Центрирует элементы по вертикали */
 }
 
+.edit-input {
+    width: 70%;
+    margin: 5px 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+/* Стили для чекбокса и метки */
+input[type='checkbox'],
+label {
+    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
+    vertical-align: middle; /* Выравнивает элементы по вертикали */
+    margin-right: 1em; /* Добавляет отступы */
+    cursor: pointer; /* Изменяет курсор на указатель */
+    padding: 1em 0;
+}
+
 /* Стили для разделителя между задачами */
 .todo li:not(:last-child) {
     border-bottom: 1px solid #000; /* Добавляет границу снизу для всех, кроме последнего элемента */
@@ -103,15 +121,6 @@ button:hover { /* Изменяет цвет кнопки при наведени
 input[type='checkbox'] {
     opacity: 0; /* Скрывает чекбокс */
     position: absolute; /* Убирает его из потока документа */
-}
-
-/* Стили для чекбокса и метки */
-input[type='checkbox'],
-label {
-    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
-    vertical-align: middle; /* Выравнивает элементы по вертикали */
-    margin: 5px; /* Добавляет отступы */
-    cursor: pointer; /* Изменяет курсор на указатель */
 }
 
 /* Стили для псевдоэлемента перед меткой (контейнер для чекбокса) */
