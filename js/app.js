@@ -25,12 +25,11 @@ function setTask() {
     addMessage.value = '' // Очищаем поле ввода
 }
 
-// При клике на кнопку "Добавить" создаем новую задачу
-addButton.addEventListener('click', () => setTask())
+addButton.addEventListener('click', () => setTask()) // При клике на кнопку "Добавить" создаем новую задачу
 
-addMessage.addEventListener('keyup', (event) => {
+addMessage.addEventListener('keyup', (event) => { // При нажатии на клавишу "Enter" создаем новую задачу
     if (event.key === 'Enter') {
-        event.preventDefault()
+        event.preventDefault() // Отмена стандартного поведения при нажатии на клавишу "Enter"
         setTask()
     }
 })
