@@ -42,7 +42,7 @@ input[type="text"]:focus {
 
 .create-new-todo {
     display: flex;
-    flex-direction: column;;
+    flex-direction: column;
 }
 
 input[type="text"], 

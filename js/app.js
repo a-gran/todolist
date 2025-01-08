@@ -77,36 +77,30 @@ function setImportant() {
 // Функция для обработки редактирования задачи
 function editTask() {
     // Находим все кнопки редактирования на странице
-    const editButtons = document.querySelectorAll('.edit')
-    
+    const editButtons = document.querySelectorAll('.edit')    
     // Добавляем обработчик для каждой кнопки редактирования
     editButtons.forEach(btn => {
         btn.addEventListener('click', (event) => {
-            // Получаем индекс текущей задачи из data-атрибута
-            const index = event.target.dataset.index
             
-            // Находим родительский элемент li для текущей задачи
-            const taskElement = event.target.closest('li')
+            const index = event.target.dataset.index // Получаем индекс текущей задачи из data-атрибута       
             
-            // Находим label элемент, содержащий текст задачи
-            const label = taskElement.querySelector('label')
+            const taskElement = event.target.closest('li') // Находим родительский элемент li для текущей задачи           
             
+            const label = taskElement.querySelector('label') // Находим label элемент, содержащий текст задачи           
             // Создаем input для редактирования
             const input = document.createElement('input')
             input.type = 'text'
             input.value = todoList[index].todo
             input.className = 'edit-input'
-            
+
             // Временно скрываем label и показываем input
             label.style.display = 'none'
             taskElement.insertBefore(input, label)
             input.focus()
-            
+
             // Обработчик для сохранения изменений при потере фокуса
-            input.addEventListener('blur', () => {
-                saveChanges(input, label, index)
-            })
-            
+            input.addEventListener('blur', () => saveChanges(input, label, index))
+
             // Обработчик для сохранения изменений при нажатии Enter
             input.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
@@ -118,24 +112,18 @@ function editTask() {
 }
 
 // Вспомогательная функция для сохранения изменений
-function saveChanges(input, label, index) {
-    // Получаем новый текст задачи
-    const newText = input.value.trim()
+function saveChanges(input, label, index) {   
+    const newText = input.value.trim()  // Получаем новый текст задачи
     
     // Проверяем, что текст не пустой
-    if (newText) {
-        // Обновляем текст в массиве задач
-        todoList[index].todo = newText
-        // Обновляем текст в label
-        label.textContent = newText
-        // Сохраняем изменения в localStorage
-        localStorage.setItem('todo', JSON.stringify(todoList))
-    }
+    if (newText) {        
+        todoList[index].todo = newText // Обновляем текст в массиве задач        
+        label.textContent = newText // Обновляем текст в label        
+        localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем изменения в localStorage
+    }    
     
-    // Показываем label обратно
-    label.style.display = ''
-    // Удаляем поле ввода
-    input.remove()
+    label.style.display = '' // Показываем label обратно    
+    input.remove() // Удаляем поле ввода
 }
 
 // Функция для отображения всех задач
