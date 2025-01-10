@@ -32,9 +32,9 @@ h1 {
 }
 
 /* Стили для текстового поля */
-/* input[type="text"] {
+input[type="text"] {
     padding: 10px; 
-} */
+}
 
 input[type="text"]:focus {
     outline: none;
@@ -42,7 +42,7 @@ input[type="text"]:focus {
 
 .create-new-todo {
     display: flex;
-    flex-direction: column;;
+    flex-direction: column;
 }
 
 input[type="text"], 
@@ -69,8 +69,8 @@ button:hover { /* Изменяет цвет кнопки при наведени
 
 /* Стили для кнопки удаления */
 .delete, .important-btn, .edit {
-    height: 20px; /* Устанавливает высоту кнопки */
-    width: 20px; /* Устанавливает ширину кнопки */
+    height: 20px; /* Устанавливает высоту иконки */
+    width: 20px; /* Устанавливает ширину иконки */
 }
 
 .important {
@@ -86,12 +86,12 @@ button:hover { /* Изменяет цвет кнопки при наведени
 
 /* Стили для каждого элемента списка задачи */
 .todo li {
-    /* padding: 1em 0; Добавляет отступы внутри элементов */
     list-style-type: none; /* Убирает стандартные маркеры списка */
     word-break: break-all; /* Переносит длинные слова на новую строку */
     display: flex; /* Использует flexbox для распределения элементов */
     justify-content: space-between; /* Размещает элементы на концах */
     align-items: center; /* Центрирует элементы по вертикали */
+    padding: 5px; /*Добавляет отступы между элементами */
 }
 
 .edit-input {
@@ -101,8 +101,8 @@ button:hover { /* Изменяет цвет кнопки при наведени
     background: #1ba39c; /* Устанавливает фоновый цвет */
     display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
     vertical-align: middle; /* Выравнивает элементы по вертикали */
-    margin: 6px; /* Добавляет отступы между элементами */
-    margin-right: 1em; /* Добавляет отступы между элементами */
+    padding: 5px; /*Добавляет отступы между элементами */
+    margin-right: 1em;
     cursor: pointer; /* Изменяет курсор на указатель */
 }
 
