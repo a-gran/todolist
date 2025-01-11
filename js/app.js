@@ -102,8 +102,8 @@ function editTask() {
             input.addEventListener('blur', () => saveChanges(input, label, index))
 
             // Обработчик для сохранения изменений при нажатии Enter
-            input.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
+            input.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
                     saveChanges(input, label, index)
                 }
             })
