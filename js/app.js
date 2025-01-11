@@ -126,6 +126,26 @@ function saveChanges(input, label, index) {
     input.remove() // Удаляем поле ввода
 }
 
+// Добавьте эту функцию после displayMessages()
+function setCheckboxHandler() {
+    // Находим все чекбоксы
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+    
+    // Добавляем обработчик для каждого чекбокса
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+            // Получаем индекс задачи из id чекбокса (item_1 -> 1)
+            const index = event.target.id.split('_')[1]
+            
+            // Обновляем состояние в массиве задач
+            todoList[index].checked = event.target.checked
+            
+            // Сохраняем обновленный массив в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+        })
+    })
+}
+
 // Функция для отображения всех задач
 function displayMessages() {
     // Если массив задач пуст, показываем сообщение 'Задач нет'
@@ -160,6 +180,7 @@ function displayMessages() {
     delTask() // Включаем обработчики удаления для вновь созданных кнопок    
     setImportant() // Включаем обработчики переключения важности
     editTask() // Добавляем обработчики для кнопок редактирования
+    setCheckboxHandler() // Добавляем вызов новой функции
 }
 
 // Обработчик события правого клика на задаче
