@@ -92,6 +92,7 @@ button:hover { /* Изменяет цвет кнопки при наведени
     justify-content: space-between; /* Размещает элементы на концах */
     align-items: center; /* Центрирует элементы по вертикали */
     padding: 5px; /*Добавляет отступы между элементами */
+    margin-right: 1em;
 }
 
 .edit-input {
