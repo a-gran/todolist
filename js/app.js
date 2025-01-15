@@ -173,31 +173,31 @@ function editTask() {
 }
 
 // Функция для обработки чекбоксов (отметки выполнения задач)
-function setCheckboxHandler() {
+function setCheck() {
     // Находим все чекбоксы на странице
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
     
     // Перебираем каждый чекбокс
     checkboxes.forEach((checkbox) => {
         // Создаем новую копию чекбокса
-        const newCheckbox = checkbox.cloneNode(true);
+        const newCheckbox = checkbox.cloneNode(true)
         // Заменяем старый чекбокс на новый
-        checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+        checkbox.parentNode.replaceChild(newCheckbox, checkbox)
         
         // Добавляем обработчик изменения состояния
         newCheckbox.addEventListener('change', (event) => {
             // Получаем индекс задачи из id чекбокса
-            const index = event.target.id.split('_')[1];
+            const index = event.target.id.split('_')[1]
             
             // Проверяем существование задачи
             if (todoList[index] !== undefined) {
                 // Обновляем состояние выполнения задачи
-                todoList[index].checked = event.target.checked;
+                todoList[index].checked = event.target.checked
                 // Сохраняем изменения в localStorage
-                localStorage.setItem('todo', JSON.stringify(todoList));
+                localStorage.setItem('todo', JSON.stringify(todoList))
             }
-        });
-    });
+        })
+    })
 }
 
 // Функция для отображения списка задач
@@ -238,12 +238,10 @@ function displayMessages() {
     delTask()
     setImportant()
     editTask()
-    setCheckboxHandler()
+    setCheck()
 }
 
 // Обработчик события правого клика на задаче
 todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
 
-const todoListCons = JSON.parse(localStorage.getItem('todo'))
 console.log("localStorage.getItem('todo')", localStorage.getItem('todo'))
-console.log('todoListCons', todoListCons)
