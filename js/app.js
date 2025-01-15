@@ -23,6 +23,7 @@ addButton.addEventListener('click', () => {
     localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем массив в localStorage (превращаем в строку JSON)    
     displayMessages() // Вызываем функцию, которая отрисует задачи заново    
     addMessage.value = '' // Очищаем поле ввода
+    //  для тестирования!!!
 })
 
 // Функция для удаления задачи
