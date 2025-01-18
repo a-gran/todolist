@@ -186,6 +186,4 @@ function displayMessages() {
 // Обработчик события правого клика на задаче
 todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
 
-const todoListCons = JSON.parse(localStorage.getItem('todo'))
 console.log("localStorage.getItem('todo')", localStorage.getItem('todo'))
-console.log('todoListCons', todoListCons)
