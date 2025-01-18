@@ -9,10 +9,10 @@ if (localStorage.getItem('todo')) {
     displayMessages() // Отображаем задачи на экране
 }
 
-// При клике на кнопку "Добавить" создаем новую задачу
-addButton.addEventListener('click', () => {    
+function setTask() {
     if (!addMessage.value) return // Если поле ввода пустое, выходим из функции
     // Формируем объект новой задачи
+
     let newTodo = {        
         todo: addMessage.value, // Текст задачи        
         checked: false, // Флаг выполнения (изначально false)        
@@ -23,155 +23,195 @@ addButton.addEventListener('click', () => {
     localStorage.setItem('todo', JSON.stringify(todoList)) // Сохраняем массив в localStorage (превращаем в строку JSON)    
     displayMessages() // Вызываем функцию, которая отрисует задачи заново    
     addMessage.value = '' // Очищаем поле ввода
-    //  для тестирования!!!
+}
+
+addButton.addEventListener('click', () => setTask()) // При клике на кнопку "Добавить" создаем новую задачу
+
+addMessage.addEventListener('keyup', (event) => { // При нажатии на клавишу "Enter" создаем новую задачу
+    if (event.key === 'Enter') {
+        event.preventDefault() // Отмена стандартного поведения при нажатии на клавишу "Enter"
+        setTask()
+    }
 })
 
-// Функция для удаления задачи
+// Функция для удаления задач из списка
 function delTask() {
-    // Находим все кнопки с классом 'delete'
-    const deleteButtons = document.querySelectorAll('.delete')
-    // Пробегаемся по всем кнопкам
-    deleteButtons.forEach((btn) => {
-        // Вешаем обработчик клика на каждую кнопку
+    // Находим все кнопки удаления на странице по классу 'delete'
+    const deleteButtons = document.querySelectorAll('.delete')    
+    // Перебираем каждую найденную кнопку удаления
+    deleteButtons.forEach((btn) => {      
+        // Добавляем новый обработчик события клика на кнопку
         btn.addEventListener('click', (event) => {
-        // Получаем индекс задачи из data-атрибута
-        const index = event.target.dataset.index
-        // Удаляем задачу из массива по индексу
-        todoList.splice(index, 1)
-        // Сохраняем обновленный массив в localStorage
-        localStorage.setItem('todo', JSON.stringify(todoList))
-        // Перерисовываем список задач
-        displayMessages()
-        })
-    })
-}
-
-// Функция для переключения флага важности задачи
-function setImportant() {
-    // Находим все кнопки с классом 'important'
-    const importantButtons = document.querySelectorAll('.important-btn')
-    // Пробегаемся по этим кнопкам
-    importantButtons.forEach((btn) => {
-        // Вешаем обработчик клика
-        btn.addEventListener('click', (event) => {
-        // Получаем индекс задачи
-        const index = event.target.dataset.index
-        // Переключаем флаг important у задачи
-        todoList[index].important = !todoList[index].important
-        // Сохраняем обновленный массив в localStorage
-        localStorage.setItem('todo', JSON.stringify(todoList))
-        // Перерисовываем список, чтобы отобразить изменения
-        displayMessages()
-        })
-    })
-}
-
-// Функция для обработки редактирования задачи
-function editTask() {
-    // Находим все кнопки редактирования на странице
-    const editButtons = document.querySelectorAll('.edit')
-    
-    // Добавляем обработчик для каждой кнопки редактирования
-    editButtons.forEach(btn => {
-        btn.addEventListener('click', (event) => {
-            // Получаем индекс текущей задачи из data-атрибута
+            // Получаем индекс задачи из data-атрибута кнопки
             const index = event.target.dataset.index
-            
-            // Находим родительский элемент li для текущей задачи
+            // Удаляем задачу из массива
+            todoList.splice(index, 1)
+            // Сохраняем обновленный список в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+            // Перерисовываем список задач
+            displayMessages()
+        })
+    })
+}
+
+// Функция для отметки задачи как важной
+function setImportant() {
+    // Находим все кнопки важности на странице
+    const importantButtons = document.querySelectorAll('.important-btn')    
+    // Перебираем каждую кнопку важности
+    importantButtons.forEach((btn) => {        
+        // Добавляем обработчик клика на новую кнопку
+        btn.addEventListener('click', (event) => {
+            // Получаем индекс задачи из data-атрибута
+            const index = event.target.dataset.index            
+            // Инвертируем флаг важности задачи
+            todoList[index].important = !todoList[index].important
+            // Сохраняем изменения в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+            // Обновляем отображение списка
+            displayMessages()
+        })
+    })
+}
+
+// Функция для редактирования существующей задачи
+function editTask() {
+    // Получаем все кнопки редактирования со страницы
+    const editButtons = document.querySelectorAll('.edit')    
+    // Перебираем каждую кнопку редактирования
+    editButtons.forEach(btn => {
+        // Создаем новую копию кнопки без старых обработчиков
+        const newBtn = btn.cloneNode(true)
+        // Заменяем старую кнопку на новую
+        btn.parentNode.replaceChild(newBtn, btn)
+
+        // Добавляем обработчик клика на новую кнопку
+        newBtn.addEventListener('click', (event) => {
+            // Получаем индекс задачи из data-атрибута
+            const index = event.target.dataset.index
+            // Находим элемент списка, содержащий задачу
             const taskElement = event.target.closest('li')
-            
-            // Находим label элемент, содержащий текст задачи
+            // Находим элемент label с текстом задачи
             const label = taskElement.querySelector('label')
             
-            // Создаем input для редактирования
-            const input = document.createElement('input')
-            input.type = 'text'
-            input.value = todoList[index].todo
-            input.className = 'edit-input'
-            input.style.width = '70%'
-            input.style.padding = '5px'
-            input.style.margin = '5px'
+            // Проверяем, не редактируется ли уже эта задача
+            // Если уже редактируется, прерываем выполнение
+            if (taskElement.querySelector('.edit-input')) return
             
-            // Временно скрываем label и показываем input
-            label.style.display = 'none'
+            // Создаем поле ввода для редактирования
+            const input = document.createElement('input');
+            // Устанавливаем тип поля ввода как текстовый
+            input.type = 'text'
+            // Копируем текущий текст задачи в поле ввода
+            input.value = todoList[index].todo
+            // Добавляем класс для стилизации
+            input.className = 'edit-input'
+            
+            // Вставляем поле ввода перед текстом задачи
             taskElement.insertBefore(input, label)
+            // Скрываем текст задачи
+            label.style.display = 'none'
+            // Устанавливаем фокус на поле ввода
             input.focus()
             
-            // Обработчик для сохранения изменений при потере фокуса
-            input.addEventListener('blur', () => {
-                saveChanges(input, label, index)
-            })
+            // Функция для сохранения изменений
+            const handleSave = () => {
+                // Получаем новый текст и удаляем пробелы
+                const newText = input.value.trim()
+                // Проверяем, что текст не пустой и label существует
+                if (newText && label) {
+                    // Обновляем текст задачи в массиве
+                    todoList[index].todo = newText
+                    // Обновляем текст в интерфейсе
+                    label.textContent = newText
+                    // Сохраняем изменения в localStorage
+                    localStorage.setItem('todo', JSON.stringify(todoList))
+                }
+                
+                // Проверяем существование label перед изменением
+                // Показываем текст задачи обратно
+                if (label && label.parentNode) label.style.display = ''                     
+                
+                // Проверяем существование поля ввода перед удалением
+                if (input && input.parentNode) input.remove() // Удаляем поле ввода                
+            }
             
-            // Обработчик для сохранения изменений при нажатии Enter
-            input.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
-                    saveChanges(input, label, index)
+            // Добавляем обработчик потери фокуса
+            // Добавляем задержку для обработки Enter
+            input.addEventListener('blur', () => setTimeout(handleSave, 100))
+            
+            // Добавляем обработчик нажатия клавиш
+            input.addEventListener('keyup', (event) => {
+                // Если нажат Enter, сохраняем изменения
+                if (event.key === 'Enter') {
+                    handleSave()
                 }
             })
         })
     })
 }
 
-// Вспомогательная функция для сохранения изменений
-function saveChanges(input, label, index) {
-    // Получаем новый текст задачи
-    const newText = input.value.trim()
+// Функция для обработки чекбоксов (отметки выполнения задач)
+function setCheck() {
+    // Находим все чекбоксы на странице
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
     
-    // Проверяем, что текст не пустой
-    if (newText) {
-        // Обновляем текст в массиве задач
-        todoList[index].todo = newText
-        // Обновляем текст в label
-        label.textContent = newText
-        // Сохраняем изменения в localStorage
-        localStorage.setItem('todo', JSON.stringify(todoList))
-    }
-    
-    // Показываем label обратно
-    label.style.display = ''
-    // Удаляем поле ввода
-    input.remove()
+    // Перебираем каждый чекбокс
+    checkboxes.forEach((checkbox) => {        
+        // Добавляем обработчик изменения состояния
+        checkbox.addEventListener('change', (event) => {
+            // Получаем индекс задачи из id чекбокса
+            const index = event.target.id.split('_')[1]            
+            // Обновляем состояние выполнения задачи
+            todoList[index].checked = event.target.checked
+            // Сохраняем изменения в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+        })
+    })
 }
 
-// Функция для отображения всех задач
+// Функция для отображения списка задач
 function displayMessages() {
-    // Если массив задач пуст, показываем сообщение 'Задач нет'
+    // Если список задач пуст, показываем сообщение
     if (!todoList.length) {
-        todo.innerHTML = 'Задач нет'
-        return
+        todo.innerHTML = 'Задач нет';
+        return;
     }
-
-    // Строка, в которую соберем HTML со всеми задачами
-    let displayMessage = ''
-    // Перебираем все объекты задач из массива todoList
+    
+    // Строка для хранения HTML-разметки списка задач
+    let displayMessage = '';
+    
+    // Перебираем все задачи и формируем HTML
     todoList.forEach((item, i) => {
-        // Формируем HTML-разметку для каждой задачи
         displayMessage += `
         <li>
+            <!-- Чекбокс для отметки выполнения -->
             <input type='checkbox' id='item_${i}' ${item.checked ? 'checked' : ''}>
-
+            <!-- Текст задачи -->
             <label for='item_${i}' class='${item.important ? 'important' : ''}'>
                 ${item.todo}
             </label>
-
+            <!-- Кнопки управления -->
             <div class="tools">
                 <img class='edit' data-index='${i}' src='./icons/edit.png' alt='edit'>
                 <img class='important-btn' data-index='${i}' src='./icons/important.png' alt='important'>
                 <img class='delete' data-index='${i}' src='./icons/delete.png' alt='delete'>
             </div>
         </li>
-        `
-    })
+        `;
+    });
     
-    todo.innerHTML = displayMessage // Записываем весь сформированный HTML в элемент .todo    
-    delTask() // Включаем обработчики удаления для вновь созданных кнопок    
-    setImportant() // Включаем обработчики переключения важности
-    editTask() // Добавляем обработчики для кнопок редактирования
+    // Обновляем содержимое списка на странице
+    todo.innerHTML = displayMessage;
+    
+    // Инициализируем все обработчики событий
+    delTask()
+    setImportant()
+    editTask()
+    setCheck()
 }
 
 // Обработчик события правого клика на задаче
 todo.addEventListener('contextmenu', (event) => event.preventDefault()) // Отменяем стандартное контекстное меню
 
-// const todoListCons = JSON.parse(localStorage.getItem('todo'))
-// console.log(localStorage.getItem('todo'))
-// console.log(todoListCons)
+console.log("localStorage.getItem('todo')", localStorage.getItem('todo'))

@@ -33,7 +33,7 @@ h1 {
 
 /* Стили для текстового поля */
 input[type="text"] {
-    padding: 10px; /* Добавляет внутренние отступы */
+    padding: 10px; 
 }
 
 input[type="text"]:focus {
@@ -42,7 +42,7 @@ input[type="text"]:focus {
 
 .create-new-todo {
     display: flex;
-    flex-direction: column;;
+    flex-direction: column;
 }
 
 input[type="text"], 
@@ -69,8 +69,8 @@ button:hover { /* Изменяет цвет кнопки при наведени
 
 /* Стили для кнопки удаления */
 .delete, .important-btn, .edit {
-    height: 20px; /* Устанавливает высоту кнопки */
-    width: 20px; /* Устанавливает ширину кнопки */
+    height: 20px; /* Устанавливает высоту иконки */
+    width: 20px; /* Устанавливает ширину иконки */
 }
 
 .important {
@@ -86,12 +86,34 @@ button:hover { /* Изменяет цвет кнопки при наведени
 
 /* Стили для каждого элемента списка задачи */
 .todo li {
-    padding: 1em 0; /* Добавляет отступы внутри элементов */
     list-style-type: none; /* Убирает стандартные маркеры списка */
     word-break: break-all; /* Переносит длинные слова на новую строку */
     display: flex; /* Использует flexbox для распределения элементов */
     justify-content: space-between; /* Размещает элементы на концах */
     align-items: center; /* Центрирует элементы по вертикали */
+    padding: 5px; /*Добавляет отступы между элементами */
+    margin-right: 1em;
+}
+
+.edit-input {
+    width: 70%;
+    border: none;
+    outline: none;
+    background: #1ba39c; /* Устанавливает фоновый цвет */
+    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
+    vertical-align: middle; /* Выравнивает элементы по вертикали */
+    padding: 5px; /* Добавляет отступы между элементами */
+    margin: 6px 1em 6px 6px; /* Добавляет отступы между элементами */
+    cursor: pointer; /* Изменяет курсор на указатель */
+}
+
+/* Стили для чекбокса и метки */
+input[type='checkbox'],
+label {
+    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
+    vertical-align: middle; /* Выравнивает элементы по вертикали */
+    cursor: pointer; /* Изменяет курсор на указатель */
+    margin: 6px 1em 6px 6px; /* Добавляет отступы между элементами */
 }
 
 /* Стили для разделителя между задачами */
@@ -103,15 +125,6 @@ button:hover { /* Изменяет цвет кнопки при наведени
 input[type='checkbox'] {
     opacity: 0; /* Скрывает чекбокс */
     position: absolute; /* Убирает его из потока документа */
-}
-
-/* Стили для чекбокса и метки */
-input[type='checkbox'],
-label {
-    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
-    vertical-align: middle; /* Выравнивает элементы по вертикали */
-    margin: 5px; /* Добавляет отступы */
-    cursor: pointer; /* Изменяет курсор на указатель */
 }
 
 /* Стили для псевдоэлемента перед меткой (контейнер для чекбокса) */
