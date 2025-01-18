@@ -37,29 +37,19 @@ addMessage.addEventListener('keyup', (event) => { // При нажатии на 
 // Функция для удаления задач из списка
 function delTask() {
     // Находим все кнопки удаления на странице по классу 'delete'
-    const deleteButtons = document.querySelectorAll('.delete');
-    
+    const deleteButtons = document.querySelectorAll('.delete')    
     // Перебираем каждую найденную кнопку удаления
-    deleteButtons.forEach((btn) => {
-        // Создаем новую копию кнопки, чтобы избежать проблем с множественными обработчиками
-        const newBtn = btn.cloneNode(true)
-        // Заменяем старую кнопку на новую, удаляя все старые обработчики событий
-        btn.parentNode.replaceChild(newBtn, btn)
-        
+    deleteButtons.forEach((btn) => {      
         // Добавляем новый обработчик события клика на кнопку
-        newBtn.addEventListener('click', (event) => {
+        btn.addEventListener('click', (event) => {
             // Получаем индекс задачи из data-атрибута кнопки
             const index = event.target.dataset.index
-            
-            // Проверяем существует ли задача с таким индексом
-            if (todoList[index] !== undefined) {
-                // Удаляем задачу из массива
-                todoList.splice(index, 1)
-                // Сохраняем обновленный список в localStorage
-                localStorage.setItem('todo', JSON.stringify(todoList))
-                // Перерисовываем список задач
-                displayMessages()
-            }
+            // Удаляем задачу из массива
+            todoList.splice(index, 1)
+            // Сохраняем обновленный список в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+            // Перерисовываем список задач
+            displayMessages()
         })
     })
 }
@@ -67,29 +57,19 @@ function delTask() {
 // Функция для отметки задачи как важной
 function setImportant() {
     // Находим все кнопки важности на странице
-    const importantButtons = document.querySelectorAll('.important-btn')
-    
+    const importantButtons = document.querySelectorAll('.important-btn')    
     // Перебираем каждую кнопку важности
-    importantButtons.forEach((btn) => {
-        // Создаем новую копию кнопки без обработчиков
-        const newBtn = btn.cloneNode(true)
-        // Заменяем старую кнопку на новую
-        btn.parentNode.replaceChild(newBtn, btn)
-        
+    importantButtons.forEach((btn) => {        
         // Добавляем обработчик клика на новую кнопку
-        newBtn.addEventListener('click', (event) => {
+        btn.addEventListener('click', (event) => {
             // Получаем индекс задачи из data-атрибута
-            const index = event.target.dataset.index
-            
-            // Проверяем существование задачи перед изменением
-            if (todoList[index] !== undefined) {
-                // Инвертируем флаг важности задачи
-                todoList[index].important = !todoList[index].important
-                // Сохраняем изменения в localStorage
-                localStorage.setItem('todo', JSON.stringify(todoList))
-                // Обновляем отображение списка
-                displayMessages();
-            }
+            const index = event.target.dataset.index            
+            // Инвертируем флаг важности задачи
+            todoList[index].important = !todoList[index].important
+            // Сохраняем изменения в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
+            // Обновляем отображение списка
+            displayMessages()
         })
     })
 }
@@ -97,15 +77,14 @@ function setImportant() {
 // Функция для редактирования существующей задачи
 function editTask() {
     // Получаем все кнопки редактирования со страницы
-    const editButtons = document.querySelectorAll('.edit');
-    
+    const editButtons = document.querySelectorAll('.edit')    
     // Перебираем каждую кнопку редактирования
     editButtons.forEach(btn => {
         // Создаем новую копию кнопки без старых обработчиков
         const newBtn = btn.cloneNode(true)
         // Заменяем старую кнопку на новую
         btn.parentNode.replaceChild(newBtn, btn)
-        
+
         // Добавляем обработчик клика на новую кнопку
         newBtn.addEventListener('click', (event) => {
             // Получаем индекс задачи из data-атрибута
@@ -178,24 +157,15 @@ function setCheck() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]')
     
     // Перебираем каждый чекбокс
-    checkboxes.forEach((checkbox) => {
-        // Создаем новую копию чекбокса
-        const newCheckbox = checkbox.cloneNode(true)
-        // Заменяем старый чекбокс на новый
-        checkbox.parentNode.replaceChild(newCheckbox, checkbox)
-        
+    checkboxes.forEach((checkbox) => {        
         // Добавляем обработчик изменения состояния
-        newCheckbox.addEventListener('change', (event) => {
+        checkbox.addEventListener('change', (event) => {
             // Получаем индекс задачи из id чекбокса
-            const index = event.target.id.split('_')[1]
-            
-            // Проверяем существование задачи
-            if (todoList[index] !== undefined) {
-                // Обновляем состояние выполнения задачи
-                todoList[index].checked = event.target.checked
-                // Сохраняем изменения в localStorage
-                localStorage.setItem('todo', JSON.stringify(todoList))
-            }
+            const index = event.target.id.split('_')[1]            
+            // Обновляем состояние выполнения задачи
+            todoList[index].checked = event.target.checked
+            // Сохраняем изменения в localStorage
+            localStorage.setItem('todo', JSON.stringify(todoList))
         })
     })
 }
