@@ -138,7 +138,7 @@ function editTask() {
             
             // Добавляем обработчик потери фокуса
             // Добавляем задержку для обработки Enter
-            input.addEventListener('blur', () => setTimeout(handleSave, 100))
+            // input.addEventListener('blur', () => setTimeout(handleSave, 100))
             
             // Добавляем обработчик нажатия клавиш
             input.addEventListener('keyup', (event) => {

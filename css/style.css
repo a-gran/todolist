@@ -3,6 +3,7 @@ body {
     background-color: lightgrey; /* Устанавливает светлый фон страницы */
     font-family: sans-serif; /* Устанавливает шрифт sans-serif */
     box-sizing: content-box; /* учета границ и паддингов */
+    font-size: 16px;
 }
 
 /* Стили для контейнера, внутри которого находится контент */
@@ -95,16 +96,16 @@ button:hover { /* Изменяет цвет кнопки при наведени
     margin-right: 1em;
 }
 
-.edit-input {
-    width: 70%;
+.edit-input {    
     border: none;
     outline: none;
     background: #1ba39c; /* Устанавливает фоновый цвет */
     display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
-    vertical-align: middle; /* Выравнивает элементы по вертикали */
-    padding: 5px; /* Добавляет отступы между элементами */
-    margin: 6px 1em 6px 6px; /* Добавляет отступы между элементами */
+    vertical-align: middle; /* Выравнивает элементы по вертикали */    
     cursor: pointer; /* Изменяет курсор на указатель */
+    font-size: 1rem;   /* Добавил font-size для соответствия */
+    margin-right: 0.5rem; /* Добавляет отступ между чекбоксом и меткой */
+    padding: 0;
 }
 
 /* Стили для чекбокса и метки */
@@ -113,7 +114,9 @@ label {
     display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
     vertical-align: middle; /* Выравнивает элементы по вертикали */
     cursor: pointer; /* Изменяет курсор на указатель */
-    margin: 6px 1em 6px 6px; /* Добавляет отступы между элементами */
+    margin-right: 0.5rem; /* Добавляет отступ между чекбоксом и меткой */
+    padding: 8px 5px;  /* Добавил такой же padding как у edit-input */
+    font-size: 1rem;   /* Добавил такой же font-size */
 }
 
 /* Стили для разделителя между задачами */
