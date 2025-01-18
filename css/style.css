@@ -1,9 +1,15 @@
+html, input {
+    line-height: 1;
+}
+
 /* Общие стили для body */
 body {
     background-color: lightgrey; /* Устанавливает светлый фон страницы */
     font-family: sans-serif; /* Устанавливает шрифт sans-serif */
     box-sizing: content-box; /* учета границ и паддингов */
     font-size: 16px;
+    padding: 0;
+    margin: 0;
 }
 
 /* Стили для контейнера, внутри которого находится контент */
@@ -32,23 +38,22 @@ h1 {
     font-size: 42px; /* Устанавливает размер шрифта */
 }
 
-/* Стили для текстового поля */
-input[type="text"] {
-    padding: 10px; 
-}
-
-input[type="text"]:focus {
-    outline: none;
-}
-
 .create-new-todo {
     display: flex;
     flex-direction: column;
 }
 
-input[type="text"], 
-button.add {
-    flex: 1; /* Одинаковая ширина */
+.message, 
+.add {
+    flex: 1; /* Одинаковая ширина */    
+}
+
+.message {
+    padding: 10px;;
+}
+
+.message:focus {
+    outline: none;
 }
 
 /* Стили для кнопки */
@@ -85,27 +90,33 @@ button:hover { /* Изменяет цвет кнопки при наведени
     text-align: center; /* Нет задач посередине */
 }
 
-/* Стили для каждого элемента списка задачи */
+/* Стили для элемента списка задачи */
 .todo li {
-    list-style-type: none; /* Убирает стандартные маркеры списка */
-    word-break: break-all; /* Переносит длинные слова на новую строку */
-    display: flex; /* Использует flexbox для распределения элементов */
-    justify-content: space-between; /* Размещает элементы на концах */
-    align-items: center; /* Центрирует элементы по вертикали */
-    padding: 5px; /*Добавляет отступы между элементами */
-    margin-right: 1em;
+    list-style-type: none;
+    word-break: break-all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;  /* Добавляем отступ для всего элемента */
 }
 
-.edit-input {    
+/* Добавляем стиль для label, чтобы он занимал доступное пространство */
+.todo li label {
+    flex: 1;  /* Позволяем label растягиваться */
+    margin-right: 10px;  /* Отступ от кнопок */
+    display: flex;  /* Делаем label flex-контейнером */
+    align-items: center;  /* Выравниваем элементы по центру */
+}
+
+.edit-input {
     border: none;
     outline: none;
-    background: #1ba39c; /* Устанавливает фоновый цвет */
-    display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
-    vertical-align: middle; /* Выравнивает элементы по вертикали */    
-    cursor: pointer; /* Изменяет курсор на указатель */
-    font-size: 1rem;   /* Добавил font-size для соответствия */
-    margin-right: 0.5rem; /* Добавляет отступ между чекбоксом и меткой */
-    padding: 0;
+    background: #1ba39c;
+    flex: 1;  /* Позволяем input растягиваться */
+    color: #ffffff;
+    padding: 10px 5px;
+    margin-left: 25px;  /* Отступ от чекбокса */
+    text-align: left;
 }
 
 /* Стили для чекбокса и метки */
@@ -114,14 +125,24 @@ label {
     display: inline-block; /* Устанавливает inline блок для чекбокса и метки */
     vertical-align: middle; /* Выравнивает элементы по вертикали */
     cursor: pointer; /* Изменяет курсор на указатель */
-    margin-right: 0.5rem; /* Добавляет отступ между чекбоксом и меткой */
-    padding: 8px 5px;  /* Добавил такой же padding как у edit-input */
-    font-size: 1rem;   /* Добавил такой же font-size */
+    text-align: left;
+}
+
+.task-text {
+    display: inline-block; /* Устанавливает inline блок для текста задачи */
+    padding: 10px 5px 10px 5px;
 }
 
 /* Стили для разделителя между задачами */
 .todo li:not(:last-child) {
     border-bottom: 1px solid #000; /* Добавляет границу снизу для всех, кроме последнего элемента */
+}
+
+.tools {
+    display: flex;
+    align-items: center;
+    gap: 5px;  /* Добавляем отступы между иконками */
+    margin-left: auto;  /* Прижимаем кнопки к правому краю */
 }
 
 /* Стили для скрытого чекбокса */
@@ -140,7 +161,6 @@ input[type='checkbox'] + label::before {
     width: 10px; /* Ширина элемента */
     height: 10px; /* Высота элемента */
     padding: 2px; /* Внутренние отступы */
-    margin-right: 10px; /* Отступ справа */
     text-align: center; /* Выравнивает содержимое по центру */
 }
 
@@ -153,11 +173,6 @@ input[type='checkbox']:checked + label::before {
     border-width: 0 3px 3px 0; /* Настройка границ для создания галочки */
     transform: rotate(45deg); /* Поворот на 45 градусов */
     margin: 0 15px 5px 5px; /* Внешние отступы */
-}
-
-.tools {
-    display: flex;
-    align-items: center;
 }
 
 /* media-запросы */

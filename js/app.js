@@ -74,75 +74,65 @@ function setImportant() {
     })
 }
 
-// Функция для редактирования существующей задачи
+// Обновленная функция editTask
 function editTask() {
-    // Получаем все кнопки редактирования со страницы
     const editButtons = document.querySelectorAll('.edit')    
-    // Перебираем каждую кнопку редактирования
+    
     editButtons.forEach(btn => {
-        // Создаем новую копию кнопки без старых обработчиков
         const newBtn = btn.cloneNode(true)
-        // Заменяем старую кнопку на новую
         btn.parentNode.replaceChild(newBtn, btn)
 
-        // Добавляем обработчик клика на новую кнопку
         newBtn.addEventListener('click', (event) => {
-            // Получаем индекс задачи из data-атрибута
             const index = event.target.dataset.index
-            // Находим элемент списка, содержащий задачу
             const taskElement = event.target.closest('li')
-            // Находим элемент label с текстом задачи
             const label = taskElement.querySelector('label')
             
-            // Проверяем, не редактируется ли уже эта задача
-            // Если уже редактируется, прерываем выполнение
             if (taskElement.querySelector('.edit-input')) return
             
-            // Создаем поле ввода для редактирования
-            const input = document.createElement('input');
-            // Устанавливаем тип поля ввода как текстовый
+            const input = document.createElement('input')
             input.type = 'text'
-            // Копируем текущий текст задачи в поле ввода
             input.value = todoList[index].todo
-            // Добавляем класс для стилизации
             input.className = 'edit-input'
             
-            // Вставляем поле ввода перед текстом задачи
-            taskElement.insertBefore(input, label)
-            // Скрываем текст задачи
-            label.style.display = 'none'
-            // Устанавливаем фокус на поле ввода
+            // Создаем span для хранения текста задачи, если его еще нет
+            let textSpan = label.querySelector('.task-text')
+            if (!textSpan) {
+                // Сохраняем текущий текст
+                const currentText = label.textContent.trim()
+                // Создаем span
+                textSpan = document.createElement('span')
+                textSpan.className = 'task-text'
+                textSpan.textContent = currentText
+                // Заменяем текстовое содержимое label на span
+                label.textContent = ''
+                label.appendChild(textSpan)
+            }
+            
+            // Скрываем только span с текстом, а не весь label
+            textSpan.style.display = 'none'
+            // Вставляем input после textSpan
+            label.insertBefore(input, textSpan)
             input.focus()
             
-            // Функция для сохранения изменений
             const handleSave = () => {
-                // Получаем новый текст и удаляем пробелы
                 const newText = input.value.trim()
-                // Проверяем, что текст не пустой и label существует
-                if (newText && label) {
-                    // Обновляем текст задачи в массиве
+                if (newText) {
                     todoList[index].todo = newText
-                    // Обновляем текст в интерфейсе
-                    label.textContent = newText
-                    // Сохраняем изменения в localStorage
+                    textSpan.textContent = newText
                     localStorage.setItem('todo', JSON.stringify(todoList))
                 }
                 
-                // Проверяем существование label перед изменением
-                // Показываем текст задачи обратно
-                if (label && label.parentNode) label.style.display = ''                     
+                // Показываем обратно только span с текстом
+                textSpan.style.display = ''
                 
-                // Проверяем существование поля ввода перед удалением
-                if (input && input.parentNode) input.remove() // Удаляем поле ввода                
+                if (input && input.parentNode) {
+                    input.remove()
+                }
             }
-            
-            // Добавляем обработчик потери фокуса
-            // Добавляем задержку для обработки Enter
+
             // input.addEventListener('blur', () => setTimeout(handleSave, 100))
             
-            // Добавляем обработчик нажатия клавиш
             input.addEventListener('keyup', (event) => {
-                // Если нажат Enter, сохраняем изменения
                 if (event.key === 'Enter') {
                     handleSave()
                 }
@@ -170,28 +160,21 @@ function setCheck() {
     })
 }
 
-// Функция для отображения списка задач
 function displayMessages() {
-    // Если список задач пуст, показываем сообщение
     if (!todoList.length) {
-        todo.innerHTML = 'Задач нет';
-        return;
+        todo.innerHTML = 'Задач нет'
+        return
     }
     
-    // Строка для хранения HTML-разметки списка задач
     let displayMessage = '';
     
-    // Перебираем все задачи и формируем HTML
     todoList.forEach((item, i) => {
         displayMessage += `
-        <li>
-            <!-- Чекбокс для отметки выполнения -->
+        <li class="task">
             <input type='checkbox' id='item_${i}' ${item.checked ? 'checked' : ''}>
-            <!-- Текст задачи -->
             <label for='item_${i}' class='${item.important ? 'important' : ''}'>
-                ${item.todo}
+                <span class="task-text">${item.todo}</span>
             </label>
-            <!-- Кнопки управления -->
             <div class="tools">
                 <img class='edit' data-index='${i}' src='./icons/edit.png' alt='edit'>
                 <img class='important-btn' data-index='${i}' src='./icons/important.png' alt='important'>
@@ -201,10 +184,8 @@ function displayMessages() {
         `;
     });
     
-    // Обновляем содержимое списка на странице
     todo.innerHTML = displayMessage;
     
-    // Инициализируем все обработчики событий
     delTask()
     setImportant()
     editTask()
